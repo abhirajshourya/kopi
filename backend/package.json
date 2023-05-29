@@ -1,0 +1,29 @@
+{
+	"name": "kopi",
+	"version": "1.0.0",
+	"description": "Minimal Web-based Time Tracker",
+	"main": "index.ts",
+	"author": "Abhiraj Shourya",
+	"license": "MIT",
+	"type": "commonjs",
+	"scripts": {
+		"build": "tsc --outDir ./build",
+		"serve": "rimraf ./build && concurrently \"tsc -w\" \"nodemon --watch ./build ./build/index.js\"",
+		"start": "node ./build/index.js"
+	},
+	"dependencies": {
+		"@hapi/hapi": "^21.3.2",
+		"rxdb": "^14.12.0",
+		"rxjs": "^7.8.1"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.17",
+		"@types/hapi": "^18.0.8",
+		"@types/node": "10.9.1",
+		"concurrently": "^8.0.1",
+		"nodemon": "^2.0.22",
+		"rimraf": "^5.0.1",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.4"
+	}
+}
