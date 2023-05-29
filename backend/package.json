@@ -8,7 +8,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"build": "tsc --outDir ./build",
-		"serve": "rimraf ./build && concurrently \"tsc -w\" \"nodemon --watch ./build ./build/index.js\"",
+		"serve": "concurrently \"tsc -w\" \"nodemon --watch ./build ./build/index.js\"",
 		"start": "node ./build/index.js"
 	},
 	"dependencies": {
@@ -22,7 +22,6 @@
 		"@types/node": "10.9.1",
 		"concurrently": "^8.0.1",
 		"nodemon": "^2.0.22",
-		"rimraf": "^5.0.1",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
 	}
