@@ -24,6 +24,7 @@ export class TimeEntryService {
 				'Entries:',
 				entries.map((entry) => entry.toJSON())
 			);
+            return entries;
 		} catch (error) {
 			console.error('Error getting entries:', error);
 		}

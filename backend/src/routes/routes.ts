@@ -18,15 +18,16 @@ export function routes(server: Server, timeEntryDb: ModelStatic<Model<any, any>>
 			console.log(body);
 			//call the service function to save data to database
 			timeEntryService.createEntry(body.title, body.duration);
-			return h.response('Entry saved successfullly!').code(200);
+			return 'Entry saved successfullly!';
 		},
 	});
 	server.route({
 		method: 'GET',
 		path: '/api/timeentries',
 		handler: (req, h) => {
+			console.log("hello")
 			//call the service function to fetch data from database
-			return h.response(timeEntryService.getEntries()).code(200);
+			return timeEntryService.getEntries();
 		},
 	});
 }
