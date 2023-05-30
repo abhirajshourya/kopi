@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatTime } from '../utils/formatTime';
+import { formatTimestamp } from '../utils/formatTime';
 import {
 	Button,
 	Card,
@@ -10,18 +10,21 @@ import {
 	Typography,
 	Box,
 } from '@mui/material';
+import { createEntry } from '../service/routes';
 
-function Tracker() {
+interface TrackerProps {
+	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function Tracker({ setRefresh }: TrackerProps) {
 	const [duration, setDuration] = useState(0);
 	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
-	const [startTime, setStartTime] = useState(0);
+	// const [startTime, setStartTime] = useState(0);
 	const [timerId, setTimerId] = useState(0);
 	const [tag, setTag] = useState('');
 
 	let TimeTracked = {
 		duration,
-		startTime,
-		tag: tag,
+		title: tag,
 	};
 
 	function toggleTimeTracker() {
@@ -29,8 +32,7 @@ function Tracker() {
 			TimeTracked = {
 				...TimeTracked,
 				duration: duration,
-				startTime: startTime,
-				tag: tag,
+				title: tag,
 			};
 			setDuration(0);
 			setTimerId(0);
@@ -39,13 +41,17 @@ function Tracker() {
 			setTag('');
 
 			console.log(TimeTracked);
+
+			createEntry(TimeTracked);
+
+			setRefresh((prev) => !prev);
 		} else {
 			const startTimestamp = Date.now() - duration;
 			const id = setInterval(() => {
 				const currentDuration = Date.now() - startTimestamp;
 				setDuration(currentDuration);
-			}, 10);
-			setStartTime(startTimestamp);
+			}, 1000);
+			// setStartTime(startTimestamp);
 			setTimerId(id);
 			setIsTrackerRunning(true);
 		}
@@ -64,7 +70,7 @@ function Tracker() {
 					}}
 				>
 					<Typography variant="h2" component="h2">
-						{formatTime(duration)}
+						{formatTimestamp(duration)}
 					</Typography>
 					<Grid container justifyContent="center" alignItems={'flex-end'}>
 						<Grid item>

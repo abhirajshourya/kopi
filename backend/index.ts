@@ -10,6 +10,11 @@ export class Server {
 		this.server = Hapi.server({
 			port: 3000,
 			host: 'localhost',
+			routes: {
+				cors: {
+					origin: ['*'], // Set your allowed origins here
+				},
+			},
 		});
 	}
 

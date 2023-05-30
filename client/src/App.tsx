@@ -3,6 +3,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Container, Divider, Grid, Typography } from '@mui/material';
 import Entry from './components/Entry';
+import { useEffect, useState } from 'react';
+import { getEntries } from './service/routes';
+import { formatTimestamp } from './utils/formatTime';
 
 const darkTheme = createTheme({
 	palette: {
@@ -10,7 +13,25 @@ const darkTheme = createTheme({
 	},
 });
 
+export interface TimeEntryModel {
+	id?: string;
+	title: string;
+	duration: number;
+}
+
 function App() {
+	const [entries, setEntries] = useState<TimeEntryModel[]>([]);
+	const [refresh, setRefresh] = useState(true);
+
+	useEffect(() => {
+		const getTimeEntries = async () => {
+			const data = await getEntries();
+			setEntries(data);
+			console.log(data);
+		};
+		getTimeEntries();
+	}, [refresh]);
+
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
@@ -22,13 +43,22 @@ function App() {
 			<Divider variant="middle" />
 			<Container sx={{ width: '40em' }}>
 				<Box sx={{ m: 2, display: 'flex', justifyContent: 'center' }}>
-					<Tracker />
+					<Tracker setRefresh={setRefresh}/>
 				</Box>
 				<Box sx={{ m: 2, display: 'flex', justifyContent: 'center' }}>
 					<Grid container spacing={2}>
-						<Grid item>
-							<Entry title={"Work"} createdAt={'May 14, 2023'} duration={'10m 20s'} />
-						</Grid>
+						{entries &&
+							entries.map((entry: TimeEntryModel) => (
+								<Grid item key={entry.id}>
+									<Entry
+										key={entry.id}
+										id={entry.id}
+										tag={entry.title}
+										duration={formatTimestamp(entry.duration)}
+										setEntries={setEntries}
+									/>
+								</Grid>
+							))}
 					</Grid>
 				</Box>
 			</Container>
