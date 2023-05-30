@@ -1,16 +1,27 @@
 import { useState } from 'react';
 import { formatTime } from '../utils/formatTime';
-import { Button, Card, Grid, Input, Typography } from '@mui/material';
+import {
+	Button,
+	Card,
+	CardContent,
+	Divider,
+	Grid,
+	TextField,
+	Typography,
+	Box,
+} from '@mui/material';
 
 function Tracker() {
 	const [duration, setDuration] = useState(0);
 	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
 	const [startTime, setStartTime] = useState(0);
 	const [timerId, setTimerId] = useState(0);
+	const [title, setTitle] = useState('');
 
 	let TimeTracked = {
 		duration,
 		startTime,
+		title,
 	};
 
 	function toggleTimeTracker() {
@@ -19,11 +30,13 @@ function Tracker() {
 				...TimeTracked,
 				duration: duration,
 				startTime: startTime,
+				title: title,
 			};
-			clearInterval(timerId);
-			setIsTrackerRunning(false);
 			setDuration(0);
 			setTimerId(0);
+			clearInterval(timerId);
+			setIsTrackerRunning(false);
+			setTitle('');
 
 			console.log(TimeTracked);
 		} else {
@@ -39,20 +52,38 @@ function Tracker() {
 	}
 
 	return (
-		<Card variant="outlined">
-			<Grid container spacing={2} alignItems="center" justifyContent="center">
-				<Grid item xs={6}>
-					<Typography gutterBottom variant="h4" component="div">
+		<Card variant="outlined" sx={{ width: '50em' }}>
+			<Box sx={{ m: 2 }}>
+				<CardContent
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: '100%', // Optional, adjust the height if needed
+					}}
+				>
+					<Typography variant="h2" component="h2">
 						{formatTime(duration)}
 					</Typography>
-				</Grid>
-				<Grid item xs={2}>
-					<Input />
-					<Button variant="outlined" onClick={toggleTimeTracker}>
-						{isTrackerRunning ? 'Stop' : 'Start'}
-					</Button>
-				</Grid>
-			</Grid>
+					<Grid container justifyContent="center" alignItems={'flex-end'}>
+						<Grid item>
+							<TextField
+								label="Title"
+								variant="standard"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+							/>
+						</Grid>
+						<Divider variant="middle" />
+						<Grid item>
+							<Button sx={{ width: '10em' }} variant="outlined" onClick={toggleTimeTracker}>
+								{isTrackerRunning ? 'Stop' : 'Start'}
+							</Button>
+						</Grid>
+					</Grid>
+				</CardContent>
+			</Box>
 		</Card>
 	);
 }
