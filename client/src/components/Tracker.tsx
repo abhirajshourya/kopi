@@ -16,12 +16,12 @@ function Tracker() {
 	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
 	const [startTime, setStartTime] = useState(0);
 	const [timerId, setTimerId] = useState(0);
-	const [title, setTitle] = useState('');
+	const [tag, setTag] = useState('');
 
 	let TimeTracked = {
 		duration,
 		startTime,
-		title,
+		tag: tag,
 	};
 
 	function toggleTimeTracker() {
@@ -30,13 +30,13 @@ function Tracker() {
 				...TimeTracked,
 				duration: duration,
 				startTime: startTime,
-				title: title,
+				tag: tag,
 			};
 			setDuration(0);
 			setTimerId(0);
 			clearInterval(timerId);
 			setIsTrackerRunning(false);
-			setTitle('');
+			setTag('');
 
 			console.log(TimeTracked);
 		} else {
@@ -52,7 +52,7 @@ function Tracker() {
 	}
 
 	return (
-		<Card variant="outlined" sx={{ width: '50em' }}>
+		<Card raised={true} sx={{ width: '40em' }}>
 			<Box sx={{ m: 2 }}>
 				<CardContent
 					sx={{
@@ -60,7 +60,7 @@ function Tracker() {
 						flexDirection: 'column',
 						alignItems: 'center',
 						justifyContent: 'center',
-						height: '100%', // Optional, adjust the height if needed
+						height: '100%',
 					}}
 				>
 					<Typography variant="h2" component="h2">
@@ -69,10 +69,10 @@ function Tracker() {
 					<Grid container justifyContent="center" alignItems={'flex-end'}>
 						<Grid item>
 							<TextField
-								label="Title"
+								label="Tag"
 								variant="standard"
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
+								value={tag}
+								onChange={(e) => setTag(e.target.value)}
 							/>
 						</Grid>
 						<Divider variant="middle" />
