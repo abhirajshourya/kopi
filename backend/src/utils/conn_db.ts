@@ -1,5 +1,4 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { v4 as uuidv4 } from 'uuid';
 import { TimeEntryModel } from '../models/time_entry';
 
 export default async function connDB() {

@@ -50,7 +50,20 @@ export function routes(server: Server, timeEntryDb: ModelStatic<Model<any, any>>
 				//call the service function to update the data in database
 				return timeEntryService.updateEntry(id, payload);
 			}
-			return "Error while updating the entry!"
+			return 'Error while updating the entry!';
+		},
+	});
+
+	server.route({
+		method: 'DELETE',
+		path: '/api/timeentries',
+		handler: (req, h) => {
+			if (typeof req.payload === 'object' && req.payload !== null && 'id' in req.payload) {
+				const id = <Identifier>req.payload.id;
+				//call the service function to update the data in database
+				return timeEntryService.deleteEntry(id);
+			}
+			return 'Error while deleting the entry!';
 		},
 	});
 }

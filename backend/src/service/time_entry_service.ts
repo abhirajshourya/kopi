@@ -37,9 +37,15 @@ export class TimeEntryService {
 	}
 	async getEntryById(id: Identifier) {
 		try {
-			return await this.TimeEntry.findByPk(id);
+			const entry = await this.TimeEntry.findByPk(id);
+			if (entry) {
+				return entry;
+			} else {
+				return 'Entry not found';
+			}
 		} catch (error) {
 			console.error('Error getting entry:', error);
+			return 'Entry not found';
 		}
 	}
 
@@ -68,11 +74,14 @@ export class TimeEntryService {
 			if (entry) {
 				await entry.destroy();
 				console.log('Entry deleted');
+				return 'Entry deleted';
 			} else {
 				console.log('Entry not found');
+				return 'Entry not found';
 			}
 		} catch (error) {
 			console.error('Error deleting entry:', error);
+			return 'Error deleting entry';
 		}
 	}
 }
