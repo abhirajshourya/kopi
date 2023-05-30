@@ -1,8 +1,8 @@
-# ⏱ Kopi
+# Kopi
 
 Kopi is a simple and efficient tool to track and manage your time effectively. It allows you to log your activities, record durations, and keep track of your tasks and projects. Whether you're a freelancer, a student, or a professional, this app can help you stay organized and make the most of your time.
 
-## 🚀 Features
+## Features
 
 - Log time entries for various activities
 - Assign titles and descriptions to time entries
@@ -12,7 +12,7 @@ Kopi is a simple and efficient tool to track and manage your time effectively. I
 - Generate reports and summaries for analysis
 - User-friendly and intuitive interface
 
-## 📈 Contributing
+## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request. Make sure to follow the established code style and guidelines.
 
