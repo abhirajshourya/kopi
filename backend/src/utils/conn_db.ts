@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import { TimeEntryModel } from '../models/time_entry';
 
 export default async function connDB() {
 	try {
@@ -9,27 +10,12 @@ export default async function connDB() {
 			storage: './kopi.sqlite', // Path to the SQLite file
 		});
 
-		//test connection
+		// Test connection
 		await sequelize.authenticate();
 		console.info('Connection has been established successfully.');
 
-		// Define a model for your data table
-		const TimeEntry = sequelize.define('TimeEntry', {
-			id: {
-				type: DataTypes.UUID,
-				primaryKey: true,
-				allowNull: false,
-				defaultValue: () => uuidv4(),
-			},
-			title: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
-			duration: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
-		});
+		// Define a model for data table
+		const TimeEntry = sequelize.define('TimeEntry', TimeEntryModel);
 
 		// Synchronize the model with the database (create the table if it doesn't exist)
 		async function syncModels() {

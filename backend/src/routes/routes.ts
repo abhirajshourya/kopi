@@ -1,6 +1,6 @@
 import { Server } from '@hapi/hapi';
-import { TimeEntryService } from '../service/time_entry_service';
-import { ModelStatic, Model } from 'sequelize';
+import { TimeEntryModel, TimeEntryService } from '../service/time_entry_service';
+import { ModelStatic, Model, Identifier } from 'sequelize';
 
 interface reqBody {
 	title: string;
@@ -13,21 +13,44 @@ export function routes(server: Server, timeEntryDb: ModelStatic<Model<any, any>>
 	server.route({
 		method: 'POST',
 		path: '/api/timeentries',
-		handler: (req, h) => {
-			const body: reqBody = req.payload as reqBody;
-			console.log(body);
+		handler: async (req, h) => {
+			const body: TimeEntryModel = req.payload as TimeEntryModel;
 			//call the service function to save data to database
-			timeEntryService.createEntry(body.title, body.duration);
-			return 'Entry saved successfullly!';
+			const entry = await timeEntryService.createEntry(body);
+			return `Entry with id:${entry.id} saved successfullly!`;
 		},
 	});
 	server.route({
 		method: 'GET',
 		path: '/api/timeentries',
 		handler: (req, h) => {
-			console.log("hello")
 			//call the service function to fetch data from database
 			return timeEntryService.getEntries();
+		},
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/api/timeentries/{id}',
+		handler: (req, h) => {
+			const id = req.params.id;
+			//call the service function to fetch data by id from database
+			return timeEntryService.getEntryById(id);
+		},
+	});
+
+	server.route({
+		method: 'PUT',
+		path: '/api/timeentries',
+		handler: (req, h) => {
+			if (typeof req.payload === 'object' && req.payload !== null && 'id' in req.payload) {
+				const id = <Identifier>req.payload.id;
+				const payload = req.payload as TimeEntryModel;
+
+				//call the service function to update the data in database
+				return timeEntryService.updateEntry(id, payload);
+			}
+			return "Error while updating the entry!"
 		},
 	});
 }

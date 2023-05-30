@@ -1,4 +1,10 @@
-import { ModelStatic, Model } from 'sequelize';
+import { ModelStatic, Model, Identifier } from 'sequelize';
+
+export interface TimeEntryModel extends Model {
+	id: Identifier;
+	title: String;
+	duration: Number;
+}
 
 export class TimeEntryService {
 	private TimeEntry: ModelStatic<Model<any, any>>;
@@ -7,9 +13,9 @@ export class TimeEntryService {
 		this.TimeEntry = timeEntryDb;
 	}
 
-	async createEntry(title: String, duration: Number) {
+	async createEntry(body: TimeEntryModel) {
 		try {
-			const entry = await this.TimeEntry.create({ title, duration });
+			const entry = await this.TimeEntry.create({ ...body });
 			console.log('Entry created:', entry.toJSON());
 			return entry.toJSON();
 		} catch (error) {
@@ -24,28 +30,39 @@ export class TimeEntryService {
 				'Entries:',
 				entries.map((entry) => entry.toJSON())
 			);
-            return entries;
+			return entries;
 		} catch (error) {
 			console.error('Error getting entries:', error);
 		}
 	}
-
-	async updateEntry(id, title) {
+	async getEntryById(id: Identifier) {
 		try {
-			const entry = await this.TimeEntry.findByPk(id);
-			if (entry) {
-				entry.title = title;
-				await entry.save();
-				console.log('Entry updated:', entry.toJSON());
-			} else {
-				console.log('Entry not found');
-			}
+			return await this.TimeEntry.findByPk(id);
 		} catch (error) {
-			console.error('Error updating entry:', error);
+			console.error('Error getting entry:', error);
 		}
 	}
 
-	async deleteEntry(id) {
+	async updateEntry(id: Identifier, payload: TimeEntryModel) {
+		try {
+			const entry = (await this.TimeEntry.findByPk(id)) as TimeEntryModel;
+			if (entry) {
+				entry.title = payload.title;
+				entry.duration = payload.duration;
+				await entry.save();
+				console.log('Entry updated:', entry.toJSON());
+				return entry.toJSON();
+			} else {
+				console.log('Entry not found');
+				return 'Entry not found';
+			}
+		} catch (error) {
+			console.error('Error updating entry:', error);
+			return { 'Error updating entry:': error };
+		}
+	}
+
+	async deleteEntry(id: Identifier) {
 		try {
 			const entry = await this.TimeEntry.findByPk(id);
 			if (entry) {
