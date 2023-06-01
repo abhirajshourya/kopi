@@ -3,9 +3,10 @@ import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } fr
 import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../App';
 import React from 'react';
+import EditDialog from './EditDialog';
 
 interface EntryProps {
-	id?: string;
+	id: string;
 	tag: string;
 	createdAt?: string;
 	duration: string;
@@ -13,6 +14,16 @@ interface EntryProps {
 }
 
 function Entry({ tag, duration, id, setEntries }: EntryProps) {
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	return (
 		<Card variant="outlined" sx={{ display: 'flex', alignItems: 'center', width: '25em' }}>
 			<Grid container>
@@ -26,7 +37,7 @@ function Entry({ tag, duration, id, setEntries }: EntryProps) {
 				</Grid>
 				<Grid item sm={3}>
 					<CardActions disableSpacing sx={{ height: '100%' }}>
-						<IconButton aria-label="edit">
+						<IconButton aria-label="edit" onClick={handleClickOpen}>
 							<Edit />
 						</IconButton>
 						<IconButton
@@ -43,6 +54,7 @@ function Entry({ tag, duration, id, setEntries }: EntryProps) {
 					</CardActions>
 				</Grid>
 			</Grid>
+			<EditDialog open={open} handleClose={handleClose} id={id} tag={tag} />
 		</Card>
 	);
 }

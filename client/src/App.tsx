@@ -30,14 +30,12 @@ export interface TimeEntryModel {
 function App() {
 	const [entries, setEntries] = useState<TimeEntryModel[]>([]);
 	const [refresh, setRefresh] = useState<boolean>(true);
-	const [theme, setTheme] = useState<Theme>(lightTheme);
+	const [theme, setTheme] = useState<Theme>(darkTheme);
 
 	const colorMode = React.useMemo(
 		() => ({
 			toggleColorMode: () => {
-				setTheme((prevMode) =>
-					prevMode.palette.mode === theme.palette.mode ? darkTheme : lightTheme
-				);
+				setTheme((prevMode) => (prevMode === darkTheme ? lightTheme : darkTheme));
 			},
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps

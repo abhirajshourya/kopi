@@ -11,6 +11,7 @@ import {
 	Box,
 } from '@mui/material';
 import { createEntry } from '../routes/routes';
+import useTagInput from '../hooks/useTagInput';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +21,7 @@ function Tracker({ setRefresh }: TrackerProps) {
 	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
 	// const [startTime, setStartTime] = useState(0);
 	const [timerId, setTimerId] = useState(0);
-	const [tag, setTag] = useState('');
+	const [tag, setTag] = useTagInput('');
 
 	let TimeTracked = {
 		duration,
@@ -78,12 +79,20 @@ function Tracker({ setRefresh }: TrackerProps) {
 								label="Tag"
 								variant="standard"
 								value={tag}
-								onChange={(e) => setTag(e.target.value)}
+								onChange={(e) => {
+									setTag(e.target.value);
+								}}
+								error={isTrackerRunning && !tag.length}
 							/>
 						</Grid>
 						<Divider variant="middle" />
 						<Grid item>
-							<Button sx={{ width: '10em' }} variant="outlined" onClick={toggleTimeTracker}>
+							<Button
+								disabled={isTrackerRunning && !tag.length}
+								sx={{ width: '10em' }}
+								variant="outlined"
+								onClick={toggleTimeTracker}
+							>
 								{isTrackerRunning ? 'Stop' : 'Start'}
 							</Button>
 						</Grid>
