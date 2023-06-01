@@ -17,15 +17,15 @@ function Entry({ tag, duration, id, setEntries }: EntryProps) {
 		<Card variant="outlined" sx={{ display: 'flex', alignItems: 'center', width: '25em' }}>
 			<Grid container>
 				<Grid item sm={6}>
-					<CardHeader title={duration} />
+					<CardHeader title={duration} sx={{ height: '100%' }} />
 				</Grid>
 				<Grid item sm={3}>
-					<CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+					<CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 						<Chip label={tag} />
 					</CardContent>
 				</Grid>
 				<Grid item sm={3}>
-					<CardActions disableSpacing>
+					<CardActions disableSpacing sx={{ height: '100%' }}>
 						<IconButton aria-label="edit">
 							<Edit />
 						</IconButton>

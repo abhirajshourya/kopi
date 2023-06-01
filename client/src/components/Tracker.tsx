@@ -58,7 +58,7 @@ function Tracker({ setRefresh }: TrackerProps) {
 	}
 
 	return (
-		<Card raised={true} sx={{ width: '40em' }}>
+		<Card raised={true} sx={{ width: '32em' }}>
 			<Box sx={{ m: 2 }}>
 				<CardContent
 					sx={{

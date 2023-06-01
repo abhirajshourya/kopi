@@ -1,7 +1,7 @@
 import Tracker from './components/Tracker';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Theme, ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Container, Divider, Grid, IconButton, Switch, Typography } from '@mui/material';
+import { Box, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import Entry from './components/Entry';
 import { useEffect, useState } from 'react';
 import { getEntries } from './routes/routes';
@@ -29,8 +29,8 @@ export interface TimeEntryModel {
 
 function App() {
 	const [entries, setEntries] = useState<TimeEntryModel[]>([]);
-	const [refresh, setRefresh] = useState(true);
-	const [theme, setTheme] = useState(lightTheme);
+	const [refresh, setRefresh] = useState<boolean>(true);
+	const [theme, setTheme] = useState<Theme>(lightTheme);
 
 	const colorMode = React.useMemo(
 		() => ({
@@ -40,6 +40,7 @@ function App() {
 				);
 			},
 		}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
@@ -70,10 +71,10 @@ function App() {
 					<Tracker setRefresh={setRefresh} />
 				</Box>
 				<Box sx={{ m: 2, display: 'flex', justifyContent: 'center' }}>
-					<Grid container spacing={2}>
+					<Grid container sx={{ marginTop: 0.5, display: 'flex', justifyContent: 'center' }}>
 						{entries &&
 							entries.map((entry: TimeEntryModel) => (
-								<Grid item key={entry.id}>
+								<Grid item key={entry.id} sx={{ m: 0.5 }}>
 									<Entry
 										key={entry.id}
 										id={entry.id}
