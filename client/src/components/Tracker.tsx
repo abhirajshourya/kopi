@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { formatTimestamp } from '../utils/formatTime';
 import {
 	Button,
@@ -10,54 +10,14 @@ import {
 	Typography,
 	Box,
 } from '@mui/material';
-import { createEntry } from '../routes/routes';
-import useTagInput from '../hooks/useTagInput';
-import { TimeEntryModel } from '../common/TimeEntryModel';
+import { useTracker } from '../hooks/useTracker';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 function Tracker({ setRefresh }: TrackerProps) {
-	const [duration, setDuration] = useState(0);
-	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
-	// const [startTime, setStartTime] = useState(0);
-	const [timerId, setTimerId] = useState(0);
-	const [tag, setTag] = useTagInput('');
-
-	let TimeTracked: TimeEntryModel = {
-		duration,
-		tag,
-	};
-
-	function toggleTimeTracker() {
-		if (isTrackerRunning) {
-			TimeTracked = {
-				...TimeTracked,
-				duration: duration,
-				tag: tag,
-			};
-			setDuration(0);
-			setTimerId(0);
-			clearInterval(timerId);
-			setIsTrackerRunning(false);
-			setTag('');
-
-			console.log(TimeTracked);
-
-			createEntry(TimeTracked);
-
-			setRefresh((prev) => !prev);
-		} else {
-			const startTimestamp = Date.now() - duration;
-			const id = setInterval(() => {
-				const currentDuration = Date.now() - startTimestamp;
-				setDuration(currentDuration);
-			}, 1000);
-			// setStartTime(startTimestamp);
-			setTimerId(id);
-			setIsTrackerRunning(true);
-		}
-	}
+	const { duration, isTrackerRunning, tag, setTag, toggleTimeTracker } = useTracker(setRefresh);
 
 	return (
 		<Card raised={true} sx={{ width: '32em' }}>
