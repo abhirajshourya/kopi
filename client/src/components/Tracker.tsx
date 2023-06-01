@@ -10,7 +10,7 @@ import {
 	Typography,
 	Box,
 } from '@mui/material';
-import { createEntry } from '../service/routes';
+import { createEntry } from '../routes/routes';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,6 +1,6 @@
 import { Delete, Edit } from '@mui/icons-material';
 import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } from '@mui/material';
-import { deleteEntry } from '../service/routes';
+import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../App';
 import React from 'react';
 

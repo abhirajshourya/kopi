@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Container, Divider, Grid, Typography } from '@mui/material';
 import Entry from './components/Entry';
 import { useEffect, useState } from 'react';
-import { getEntries } from './service/routes';
+import { getEntries } from './routes/routes';
 import { formatTimestamp } from './utils/formatTime';
 
 const darkTheme = createTheme({
