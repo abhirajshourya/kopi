@@ -5,12 +5,13 @@ Kopi is a simple and efficient tool to track and manage your time effectively. I
 ## Features
 
 - Log time entries for various activities
-- Assign titles and descriptions to time entries
-- Categorize time entries by projects or tags
-- Calculate and display total durations
+- Assign tags to time entries
 - Edit and delete existing time entries
-- Generate reports and summaries for analysis
 - User-friendly and intuitive interface
+
+
+## Screenshot
+<img src="./example/Kopi.png">
 
 ## Contributing
 
