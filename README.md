@@ -9,8 +9,8 @@ Kopi is a simple and efficient tool to track and manage your time effectively. I
 - Edit and delete existing time entries
 - User-friendly and intuitive interface
 
-
 ## Screenshot
+
 <img src="./example/Kopi.png">
 
 ## Contributing
@@ -19,7 +19,7 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 License.
 
 ## Contact
 
