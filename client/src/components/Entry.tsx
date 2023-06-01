@@ -1,5 +1,5 @@
 import { Delete, Edit } from '@mui/icons-material';
-import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } from '@mui/material';
+import { Card, CardActions, CardHeader, Chip, Grid, IconButton } from '@mui/material';
 import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../common/TimeEntryModel';
 import React from 'react';
@@ -27,15 +27,26 @@ function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
 	};
 
 	return (
-		<Card variant="outlined" sx={{ display: 'flex', alignItems: 'center', width: '25em' }}>
+		<Card
+			variant="outlined"
+			sx={{ display: 'flex', alignItems: 'center', width: '25em' }}
+			// onClick={handleClickOpen}
+		>
 			<Grid container>
 				<Grid item sm={6}>
 					<CardHeader title={duration} sx={{ height: '100%' }} />
 				</Grid>
-				<Grid item sm={3}>
-					<CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-						<Chip label={tag} />
-					</CardContent>
+				<Grid
+					item
+					sm={3}
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignContent: 'center',
+						flexDirection: 'column',
+					}}
+				>
+					<Chip label={tag} />
 				</Grid>
 				<Grid item sm={3}>
 					<CardActions disableSpacing sx={{ height: '100%' }}>

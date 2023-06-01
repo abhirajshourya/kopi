@@ -1,3 +1,4 @@
 export const Styles = {
-	BoxCenter: { m: 2, display: 'flex', justifyContent: 'center' },
+	BoxCenter: { display: 'flex', justifyContent: 'center' },
+	Margin: { m: 2 },
 };
