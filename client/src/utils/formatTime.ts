@@ -17,3 +17,15 @@ export function formatTimestamp(timestamp: number): string {
 	const seconds = Math.floor((timestamp / 1000) % 60);
 	return `${hours}h ${minutes}m ${seconds}s`;
 }
+
+export const formatDurationToMilliseconds = (duration: string): number => {
+	const [hoursStr, minutesStr, secondsStr] = duration.split(' ');
+
+	const hours = parseInt(hoursStr.replace('h', ''), 10) || 0;
+	const minutes = parseInt(minutesStr.replace('m', ''), 10) || 0;
+	const seconds = parseInt(secondsStr.replace('s', ''), 10) || 0;
+
+	const milliseconds = (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
+
+	return milliseconds;
+};

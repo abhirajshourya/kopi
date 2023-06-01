@@ -2,11 +2,6 @@ import { Server } from '@hapi/hapi';
 import { TimeEntryModel, TimeEntryService } from '../service/time_entry_service';
 import { ModelStatic, Model, Identifier } from 'sequelize';
 
-interface reqBody {
-	title: string;
-	duration: number;
-}
-
 export function routes(server: Server, timeEntryDb: ModelStatic<Model<any, any>>) {
 	const timeEntryService = new TimeEntryService(timeEntryDb);
 
@@ -41,10 +36,10 @@ export function routes(server: Server, timeEntryDb: ModelStatic<Model<any, any>>
 
 	server.route({
 		method: 'PUT',
-		path: '/api/timeentries',
+		path: '/api/timeentries/{id}',
 		handler: (req, h) => {
-			if (typeof req.payload === 'object' && req.payload !== null && 'id' in req.payload) {
-				const id = <Identifier>req.payload.id;
+			if (typeof req.payload === 'object' && req.payload !== null && 'id' in req.params) {
+				const id = <Identifier>req.params.id;
 				const payload = req.payload as TimeEntryModel;
 
 				//call the service function to update the data in database

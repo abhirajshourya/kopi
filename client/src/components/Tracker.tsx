@@ -10,7 +10,9 @@ import {
 	Typography,
 	Box,
 } from '@mui/material';
-import { createEntry } from '../service/routes';
+import { createEntry } from '../routes/routes';
+import useTagInput from '../hooks/useTagInput';
+import { TimeEntryModel } from '../App';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,11 +22,11 @@ function Tracker({ setRefresh }: TrackerProps) {
 	const [isTrackerRunning, setIsTrackerRunning] = useState(false);
 	// const [startTime, setStartTime] = useState(0);
 	const [timerId, setTimerId] = useState(0);
-	const [tag, setTag] = useState('');
+	const [tag, setTag] = useTagInput('');
 
-	let TimeTracked = {
+	let TimeTracked: TimeEntryModel = {
 		duration,
-		title: tag,
+		tag,
 	};
 
 	function toggleTimeTracker() {
@@ -32,7 +34,7 @@ function Tracker({ setRefresh }: TrackerProps) {
 			TimeTracked = {
 				...TimeTracked,
 				duration: duration,
-				title: tag,
+				tag: tag,
 			};
 			setDuration(0);
 			setTimerId(0);
@@ -58,7 +60,7 @@ function Tracker({ setRefresh }: TrackerProps) {
 	}
 
 	return (
-		<Card raised={true} sx={{ width: '40em' }}>
+		<Card raised={true} sx={{ width: '32em' }}>
 			<Box sx={{ m: 2 }}>
 				<CardContent
 					sx={{
@@ -78,12 +80,20 @@ function Tracker({ setRefresh }: TrackerProps) {
 								label="Tag"
 								variant="standard"
 								value={tag}
-								onChange={(e) => setTag(e.target.value)}
+								onChange={(e) => {
+									setTag(e.target.value);
+								}}
+								error={isTrackerRunning && !tag.length}
 							/>
 						</Grid>
 						<Divider variant="middle" />
 						<Grid item>
-							<Button sx={{ width: '10em' }} variant="outlined" onClick={toggleTimeTracker}>
+							<Button
+								disabled={isTrackerRunning && !tag.length}
+								sx={{ width: '10em' }}
+								variant="outlined"
+								onClick={toggleTimeTracker}
+							>
 								{isTrackerRunning ? 'Stop' : 'Start'}
 							</Button>
 						</Grid>

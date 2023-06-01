@@ -2,7 +2,7 @@ import { ModelStatic, Model, Identifier } from 'sequelize';
 
 export interface TimeEntryModel extends Model {
 	id: Identifier;
-	title: String;
+	tag: String;
 	duration: Number;
 }
 
@@ -53,7 +53,7 @@ export class TimeEntryService {
 		try {
 			const entry = (await this.TimeEntry.findByPk(id)) as TimeEntryModel;
 			if (entry) {
-				entry.title = payload.title;
+				entry.tag = payload.tag;
 				entry.duration = payload.duration;
 				await entry.save();
 				console.log('Entry updated:', entry.toJSON());

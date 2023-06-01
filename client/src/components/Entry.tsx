@@ -1,32 +1,45 @@
 import { Delete, Edit } from '@mui/icons-material';
 import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } from '@mui/material';
-import { deleteEntry } from '../service/routes';
+import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../App';
 import React from 'react';
+import EditDialog from './EditDialog';
+import { formatDurationToMilliseconds } from '../utils/formatTime';
 
 interface EntryProps {
-	id?: string;
+	id: string;
 	tag: string;
 	createdAt?: string;
 	duration: string;
 	setEntries: React.Dispatch<React.SetStateAction<TimeEntryModel[]>>;
+	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Entry({ tag, duration, id, setEntries }: EntryProps) {
+function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	return (
 		<Card variant="outlined" sx={{ display: 'flex', alignItems: 'center', width: '25em' }}>
 			<Grid container>
 				<Grid item sm={6}>
-					<CardHeader title={duration} />
+					<CardHeader title={duration} sx={{ height: '100%' }} />
 				</Grid>
 				<Grid item sm={3}>
-					<CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+					<CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 						<Chip label={tag} />
 					</CardContent>
 				</Grid>
 				<Grid item sm={3}>
-					<CardActions disableSpacing>
-						<IconButton aria-label="edit">
+					<CardActions disableSpacing sx={{ height: '100%' }}>
+						<IconButton aria-label="edit" onClick={handleClickOpen}>
 							<Edit />
 						</IconButton>
 						<IconButton
@@ -43,6 +56,16 @@ function Entry({ tag, duration, id, setEntries }: EntryProps) {
 					</CardActions>
 				</Grid>
 			</Grid>
+			{open && (
+				<EditDialog
+					open={open}
+					handleClose={handleClose}
+					id={id}
+					tag={tag}
+					duration={formatDurationToMilliseconds(duration)}
+					setRefresh={setRefresh}
+				/>
+			)}
 		</Card>
 	);
 }

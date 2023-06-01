@@ -8,7 +8,7 @@ export const TimeEntryModel = {
         allowNull: false,
         defaultValue: () => uuidv4(),
     },
-    title: {
+    tag: {
         type: DataTypes.STRING,
         allowNull: false,
     },
