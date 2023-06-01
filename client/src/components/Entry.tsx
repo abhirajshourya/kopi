@@ -4,6 +4,7 @@ import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../App';
 import React from 'react';
 import EditDialog from './EditDialog';
+import { formatDurationToMilliseconds } from '../utils/formatTime';
 
 interface EntryProps {
 	id: string;
@@ -11,9 +12,10 @@ interface EntryProps {
 	createdAt?: string;
 	duration: string;
 	setEntries: React.Dispatch<React.SetStateAction<TimeEntryModel[]>>;
+	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Entry({ tag, duration, id, setEntries }: EntryProps) {
+function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -54,7 +56,16 @@ function Entry({ tag, duration, id, setEntries }: EntryProps) {
 					</CardActions>
 				</Grid>
 			</Grid>
-			<EditDialog open={open} handleClose={handleClose} id={id} tag={tag} />
+			{open && (
+				<EditDialog
+					open={open}
+					handleClose={handleClose}
+					id={id}
+					tag={tag}
+					duration={formatDurationToMilliseconds(duration)}
+					setRefresh={setRefresh}
+				/>
+			)}
 		</Card>
 	);
 }

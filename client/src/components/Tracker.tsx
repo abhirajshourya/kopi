@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { createEntry } from '../routes/routes';
 import useTagInput from '../hooks/useTagInput';
+import { TimeEntryModel } from '../App';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,9 +24,9 @@ function Tracker({ setRefresh }: TrackerProps) {
 	const [timerId, setTimerId] = useState(0);
 	const [tag, setTag] = useTagInput('');
 
-	let TimeTracked = {
+	let TimeTracked: TimeEntryModel = {
 		duration,
-		title: tag,
+		tag,
 	};
 
 	function toggleTimeTracker() {
@@ -33,7 +34,7 @@ function Tracker({ setRefresh }: TrackerProps) {
 			TimeTracked = {
 				...TimeTracked,
 				duration: duration,
-				title: tag,
+				tag: tag,
 			};
 			setDuration(0);
 			setTimerId(0);

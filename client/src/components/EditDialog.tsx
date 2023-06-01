@@ -1,12 +1,13 @@
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import { TextField } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import useTagInput from '../hooks/useTagInput';
+import { Save } from '@mui/icons-material';
+import { updateEntry } from '../routes/routes';
+import { TimeEntryModel } from '../App';
 
 function PaperComponent(props: PaperProps) {
 	return (
@@ -21,47 +22,59 @@ interface DraggableDialogProps {
 	handleClose: () => void;
 	id: string;
 	tag: string;
+	duration: number;
+	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function DraggableDialog({ open, handleClose, id, tag }: DraggableDialogProps) {
+export default function EditDialog({
+	open,
+	handleClose,
+	id,
+	tag,
+	duration,
+	setRefresh,
+}: DraggableDialogProps) {
 	const [tagValue, setTagValue] = useTagInput(tag);
+
+	let TimeTracked: TimeEntryModel = {
+		duration,
+		tag,
+	};
+
+	const onSave = () => {
+		TimeTracked = {
+			...TimeTracked,
+			tag: tagValue,
+		};
+		handleClose();
+		updateEntry(id, TimeTracked);
+		setRefresh((prev) => !prev);
+	};
+
 	return (
-		<div>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				PaperComponent={PaperComponent}
-				aria-labelledby="draggable-dialog-title"
-				maxWidth="xs"
-				key={id}
-			>
-				<DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-					Edit Time Log
-				</DialogTitle>
-				<DialogContent>
-					<TextField
-						label="Tag"
-						variant="standard"
-						value={tagValue}
-						onChange={(e) => setTagValue(e.target.value)}
-						error={!tagValue.length}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button
-						autoFocus
-						onClick={() => {
-							handleClose();
-							setTagValue(tag);
-						}}
-					>
-						Cancel
-					</Button>
-					<Button disabled={!tagValue.length} onClick={handleClose}>
-						Save
-					</Button>
-				</DialogActions>
-			</Dialog>
-		</div>
+		<Dialog
+			open={open}
+			onClose={handleClose}
+			PaperComponent={PaperComponent}
+			aria-labelledby="draggable-dialog-title"
+			maxWidth="xs"
+			key={id}
+		>
+			<DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+				Edit Time Log
+			</DialogTitle>
+			<DialogContent sx={{ display: 'flex', alignItems: 'end', justifyContent: 'space-around' }}>
+				<TextField
+					label="Tag"
+					variant="standard"
+					value={tagValue}
+					onChange={(e) => setTagValue(e.target.value)}
+					error={!tagValue.length}
+				/>
+				<IconButton disabled={!tagValue.length} onClick={onSave}>
+					<Save />
+				</IconButton>
+			</DialogContent>
+		</Dialog>
 	);
 }

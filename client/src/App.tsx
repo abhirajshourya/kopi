@@ -23,7 +23,7 @@ const lightTheme = createTheme({
 
 export interface TimeEntryModel {
 	id?: string;
-	title: string;
+	tag: string;
 	duration: number;
 }
 
@@ -70,18 +70,24 @@ function App() {
 				</Box>
 				<Box sx={{ m: 2, display: 'flex', justifyContent: 'center' }}>
 					<Grid container sx={{ marginTop: 0.5, display: 'flex', justifyContent: 'center' }}>
-						{entries &&
-							entries.map((entry: TimeEntryModel) => (
-								<Grid item key={entry.id} sx={{ m: 0.5 }}>
-									<Entry
-										key={entry.id}
-										id={entry.id}
-										tag={entry.title}
-										duration={formatTimestamp(entry.duration)}
-										setEntries={setEntries}
-									/>
-								</Grid>
-							))}
+						{entries.length ? (
+							entries.map((entry: TimeEntryModel) =>
+								entry.id ? (
+									<Grid item key={entry.id} sx={{ m: 0.5 }}>
+										<Entry
+											key={entry.id}
+											id={entry.id}
+											tag={entry.tag}
+											duration={formatTimestamp(entry.duration)}
+											setEntries={setEntries}
+											setRefresh={setRefresh}
+										/>
+									</Grid>
+								) : null
+							)
+						) : (
+							<Typography variant="overline">press start to log time</Typography>
+						)}
 					</Grid>
 				</Box>
 			</Container>
