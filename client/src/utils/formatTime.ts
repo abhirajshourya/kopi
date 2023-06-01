@@ -18,7 +18,7 @@ export function formatTimestamp(timestamp: number): string {
 	return `${hours}h ${minutes}m ${seconds}s`;
 }
 
-export const formatDurationToMilliseconds = (duration: string): number => {
+export const convertToTimestamp = (duration: string): number => {
 	const [hoursStr, minutesStr, secondsStr] = duration.split(' ');
 
 	const hours = parseInt(hoursStr.replace('h', ''), 10) || 0;

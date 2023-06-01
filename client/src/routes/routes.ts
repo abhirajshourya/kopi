@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TimeEntryModel } from '../App';
+import { TimeEntryModel } from '../common/TimeEntryModel';
 
 const API_PATH = 'http://localhost:3000/api/timeentries';
 

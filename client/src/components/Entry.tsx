@@ -1,10 +1,10 @@
 import { Delete, Edit } from '@mui/icons-material';
 import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } from '@mui/material';
 import { deleteEntry } from '../routes/routes';
-import { TimeEntryModel } from '../App';
+import { TimeEntryModel } from '../common/TimeEntryModel';
 import React from 'react';
 import EditDialog from './EditDialog';
-import { formatDurationToMilliseconds } from '../utils/formatTime';
+import { convertToTimestamp } from '../utils/formatTime';
 
 interface EntryProps {
 	id: string;
@@ -62,7 +62,7 @@ function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
 					handleClose={handleClose}
 					id={id}
 					tag={tag}
-					duration={formatDurationToMilliseconds(duration)}
+					duration={convertToTimestamp(duration)}
 					setRefresh={setRefresh}
 				/>
 			)}
