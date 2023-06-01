@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { createEntry } from '../routes/routes';
 import useTagInput from '../hooks/useTagInput';
-import { TimeEntryModel } from '../App';
+import { TimeEntryModel } from '../common/TimeEntryModel';
 
 interface TrackerProps {
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;

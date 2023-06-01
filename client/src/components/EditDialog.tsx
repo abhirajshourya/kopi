@@ -7,7 +7,7 @@ import { IconButton, TextField } from '@mui/material';
 import useTagInput from '../hooks/useTagInput';
 import { Save } from '@mui/icons-material';
 import { updateEntry } from '../routes/routes';
-import { TimeEntryModel } from '../App';
+import { TimeEntryModel } from '../common/TimeEntryModel';
 
 function PaperComponent(props: PaperProps) {
 	return (
