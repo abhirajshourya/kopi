@@ -21,24 +21,20 @@ function Tracker({ setRefresh }: TrackerProps) {
 
 	return (
 		<Card raised={true} sx={{ width: '32em' }}>
-			<Box sx={{ m: 2 }}>
-				<CardContent
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						justifyContent: 'center',
-						height: '100%',
-					}}
-				>
-					<Typography variant="h2" component="h2">
-						{formatTimestamp(duration)}
-					</Typography>
-					<Grid container justifyContent="center" alignItems={'flex-end'}>
+			<Box sx={{ m: 2, height: '100%' }}>
+				<CardContent>
+					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+						<Typography variant="h2" component="h2">
+							{formatTimestamp(duration)}
+						</Typography>
+					</Box>
+					<Divider variant="middle" />
+					<Grid container alignItems="center" justifyContent="space-evenly" marginTop="1em">
 						<Grid item>
 							<TextField
 								label="Tag"
-								variant="standard"
+								size="small"
+								variant="outlined"
 								value={tag}
 								onChange={(e) => {
 									setTag(e.target.value);
@@ -46,11 +42,10 @@ function Tracker({ setRefresh }: TrackerProps) {
 								error={isTrackerRunning && !tag.length}
 							/>
 						</Grid>
-						<Divider variant="middle" />
 						<Grid item>
 							<Button
 								disabled={isTrackerRunning && !tag.length}
-								sx={{ width: '10em' }}
+								sx={{ width: '8em' }}
 								variant="outlined"
 								onClick={toggleTimeTracker}
 							>

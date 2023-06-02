@@ -1,5 +1,5 @@
-import { Delete, Edit } from '@mui/icons-material';
-import { Card, CardActions, CardContent, CardHeader, Chip, Grid, IconButton } from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { Card, CardActions, CardHeader, Chip, Grid, IconButton, Theme } from '@mui/material';
 import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../common/TimeEntryModel';
 import React from 'react';
@@ -13,10 +13,12 @@ interface EntryProps {
 	duration: string;
 	setEntries: React.Dispatch<React.SetStateAction<TimeEntryModel[]>>;
 	setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
+	theme: Theme;
 }
 
-function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
+function Entry({ tag, duration, id, setEntries, setRefresh, theme }: EntryProps) {
 	const [open, setOpen] = React.useState(false);
+	const [onMouseStyle, setOnMouseStyle] = React.useState({});
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -27,35 +29,63 @@ function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
 	};
 
 	return (
-		<Card variant="outlined" sx={{ display: 'flex', alignItems: 'center', width: '25em' }}>
-			<Grid container>
-				<Grid item sm={6}>
-					<CardHeader title={duration} sx={{ height: '100%' }} />
-				</Grid>
-				<Grid item sm={3}>
-					<CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+		<>
+			<Card
+				variant="outlined"
+				sx={{
+					width: '25em',
+					cursor: 'pointer',
+					...onMouseStyle,
+				}}
+				onClick={handleClickOpen}
+				onMouseEnter={() => {
+					setOnMouseStyle({
+						border: `1px groove ${theme.palette.mode === 'dark' ? 'white' : 'black'}`,
+					});
+				}}
+				onMouseLeave={() => {
+					setOnMouseStyle({});
+				}}
+			>
+				<Grid container>
+					<Grid item sm={6}>
+						<CardHeader title={duration} sx={{ height: '100%' }} />
+					</Grid>
+					<Grid
+						item
+						sm={3}
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignContent: 'center',
+							flexDirection: 'column',
+						}}
+					>
 						<Chip label={tag} />
-					</CardContent>
-				</Grid>
-				<Grid item sm={3}>
-					<CardActions disableSpacing sx={{ height: '100%' }}>
-						<IconButton aria-label="edit" onClick={handleClickOpen}>
-							<Edit />
-						</IconButton>
-						<IconButton
-							aria-label="delete"
-							onClick={() => {
-								deleteEntry(id);
-								setEntries((entries: TimeEntryModel[]) => {
-									return entries.filter((entry) => entry.id !== id);
-								});
+					</Grid>
+					<Grid item sm={3}>
+						<CardActions
+							disableSpacing
+							sx={{
+								height: '100%',
+								justifyContent: 'flex-end',
 							}}
 						>
-							<Delete />
-						</IconButton>
-					</CardActions>
+							<IconButton
+								aria-label="delete"
+								onClick={() => {
+									deleteEntry(id);
+									setEntries((entries: TimeEntryModel[]) => {
+										return entries.filter((entry) => entry.id !== id);
+									});
+								}}
+							>
+								<CloseRoundedIcon />
+							</IconButton>
+						</CardActions>
+					</Grid>
 				</Grid>
-			</Grid>
+			</Card>
 			{open && (
 				<EditDialog
 					open={open}
@@ -66,7 +96,7 @@ function Entry({ tag, duration, id, setEntries, setRefresh }: EntryProps) {
 					setRefresh={setRefresh}
 				/>
 			)}
-		</Card>
+		</>
 	);
 }
 

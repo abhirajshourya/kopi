@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { TimeEntryModel } from '../common/TimeEntryModel';
 
-const API_PATH = 'http://localhost:3000/api/timeentries';
+const VITE_SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME;
+const VITE_SERVER_PORT = import.meta.env.VITE_SERVER_PORT;
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
+
+const API_PATH = VITE_SERVER_HOSTNAME + ':' + VITE_SERVER_PORT + API_ENDPOINT;
 
 export async function getEntries() {
 	try {
