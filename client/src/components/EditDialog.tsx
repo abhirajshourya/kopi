@@ -3,11 +3,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import { IconButton, TextField } from '@mui/material';
+import { DialogActions, IconButton, TextField } from '@mui/material';
 import useTagInput from '../hooks/useTagInput';
 import { Save } from '@mui/icons-material';
 import { updateEntry } from '../routes/routes';
 import { TimeEntryModel } from '../common/TimeEntryModel';
+import { useState } from 'react';
+import { convertToTimestamp, formatTimestamp } from '../utils/formatTime';
+import { matchTimePattern } from '../utils/checks';
 
 function PaperComponent(props: PaperProps) {
 	return (
@@ -35,7 +38,7 @@ export default function EditDialog({
 	setRefresh,
 }: DraggableDialogProps) {
 	const [tagValue, setTagValue] = useTagInput(tag);
-
+	const [durationValue, setDurationValue] = useState(formatTimestamp(duration));
 	let TimeTracked: TimeEntryModel = {
 		duration,
 		tag,
@@ -45,6 +48,7 @@ export default function EditDialog({
 		TimeTracked = {
 			...TimeTracked,
 			tag: tagValue,
+			duration: convertToTimestamp(durationValue),
 		};
 		handleClose();
 		updateEntry(id, TimeTracked);
@@ -63,7 +67,25 @@ export default function EditDialog({
 			<DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
 				Edit Time Log
 			</DialogTitle>
-			<DialogContent sx={{ display: 'flex', alignItems: 'end', justifyContent: 'space-around' }}>
+			<DialogContent
+				sx={{
+					display: 'flex',
+					alignItems: 'end',
+					justifyContent: 'space-around',
+					flexDirection: 'column',
+				}}
+			>
+				<TextField
+					sx={{ mb: 2 }}
+					helperText="Format: 1h 30m 40s"
+					label="Duration"
+					variant="standard"
+					value={durationValue}
+					onChange={(e) => {
+						setDurationValue(e.target.value);
+					}}
+					error={!durationValue || !matchTimePattern(durationValue)}
+				/>
 				<TextField
 					label="Tag"
 					variant="standard"
@@ -71,10 +93,15 @@ export default function EditDialog({
 					onChange={(e) => setTagValue(e.target.value)}
 					error={!tagValue.length}
 				/>
-				<IconButton disabled={!tagValue.length} onClick={onSave}>
+			</DialogContent>
+			<DialogActions>
+				<IconButton
+					disabled={!tagValue.length || !durationValue.length || !matchTimePattern(durationValue)}
+					onClick={onSave}
+				>
 					<Save />
 				</IconButton>
-			</DialogContent>
+			</DialogActions>
 		</Dialog>
 	);
 }

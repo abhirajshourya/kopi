@@ -33,8 +33,6 @@ function Entry({ tag, duration, id, setEntries, setRefresh, theme }: EntryProps)
 			<Card
 				variant="outlined"
 				sx={{
-					display: 'flex',
-					alignItems: 'center',
 					width: '25em',
 					cursor: 'pointer',
 					...onMouseStyle,

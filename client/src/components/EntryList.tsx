@@ -42,7 +42,10 @@ const EntryList = ({ refresh, setRefresh, theme }: EntryListProps) => {
 	);
 
 	return (
-		<Grid container sx={{ marginTop: 0.5, display: 'flex', justifyContent: 'center' }}>
+		<Grid
+			container
+			sx={{ marginTop: 0.5, display: 'flex', alignContent: 'center', flexDirection: 'column' }}
+		>
 			{List}
 		</Grid>
 	);
