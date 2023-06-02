@@ -22,7 +22,7 @@ function App() {
 					<Tracker setRefresh={setRefresh} />
 				</Box>
 				<Box sx={{ ...Styles.BoxCenter, ...Styles.Margin }}>
-					<EntryList refresh={refresh} setRefresh={setRefresh} />
+					<EntryList refresh={refresh} setRefresh={setRefresh} theme={theme}/>
 				</Box>
 			</Container>
 		</ThemeProvider>
