@@ -18,11 +18,11 @@ function App() {
 			<Header setTheme={setTheme} theme={theme} />
 			<Divider variant="middle" />
 			<Container sx={{ width: '40em' }}>
-				<Box sx={Styles.BoxCenter}>
+				<Box sx={{ ...Styles.BoxCenter, ...Styles.Margin }}>
 					<Tracker setRefresh={setRefresh} />
 				</Box>
-				<Box sx={Styles.BoxCenter}>
-					<EntryList refresh={refresh} setRefresh={setRefresh} />
+				<Box sx={{ ...Styles.BoxCenter, ...Styles.Margin }}>
+					<EntryList refresh={refresh} setRefresh={setRefresh} theme={theme}/>
 				</Box>
 			</Container>
 		</ThemeProvider>
