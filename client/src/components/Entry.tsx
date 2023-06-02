@@ -1,4 +1,4 @@
-import { Delete } from '@mui/icons-material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Card, CardActions, CardHeader, Chip, Grid, IconButton, Theme } from '@mui/material';
 import { deleteEntry } from '../routes/routes';
 import { TimeEntryModel } from '../common/TimeEntryModel';
@@ -33,8 +33,6 @@ function Entry({ tag, duration, id, setEntries, setRefresh, theme }: EntryProps)
 			<Card
 				variant="outlined"
 				sx={{
-					display: 'flex',
-					alignItems: 'center',
 					width: '25em',
 					cursor: 'pointer',
 					...onMouseStyle,
@@ -82,7 +80,7 @@ function Entry({ tag, duration, id, setEntries, setRefresh, theme }: EntryProps)
 									});
 								}}
 							>
-								<Delete />
+								<CloseRoundedIcon />
 							</IconButton>
 						</CardActions>
 					</Grid>
