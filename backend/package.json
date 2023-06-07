@@ -8,7 +8,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"build": "tsc --outDir ./build",
-		"serve": "concurrently \"tsc -w\" \"nodemon --watch ./build ./build/index.js\"",
+		"serve": "concurrently \"tsc -w\" \"nodemon --watch ./build ./build/index.js\" \" cd ../client && yarn dev \"",
 		"start": "node ./build/index.js"
 	},
 	"dependencies": {
