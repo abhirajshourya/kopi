@@ -1,5 +1,5 @@
-import React from "react";
-import { formatTimestamp } from "../utils/formatTime";
+import React from 'react';
+import { formatTimestamp } from '../utils/formatTime';
 import {
   Button,
   Card,
@@ -9,8 +9,8 @@ import {
   TextField,
   Typography,
   Box,
-} from "@mui/material";
-import { useTracker } from "../hooks/useTracker";
+} from '@mui/material';
+import { useTracker } from '../hooks/useTracker';
 
 interface TrackerProps {
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,10 +29,10 @@ function Tracker({ setRefresh }: TrackerProps) {
   } = useTracker(setRefresh);
 
   return (
-    <Card raised={true} sx={{ width: "32em" }}>
-      <Box sx={{ m: 2, height: "100%" }}>
+    <Card raised={true} sx={{ width: '32em' }}>
+      <Box sx={{ m: 2, height: '100%' }}>
         <CardContent>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="h2" component="h2">
               {formatTimestamp(duration)}
             </Typography>
@@ -56,27 +56,27 @@ function Tracker({ setRefresh }: TrackerProps) {
                 error={isTrackerRunning && !tag.length}
               />
             </Grid>
-            <Grid item style={{ marginTop: "1rem" }}>
+            <Grid item style={{ marginTop: '1rem' }}>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "360px",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '360px',
                 }}
               >
                 <Button
                   color="success"
                   disabled={isTrackerRunning && !isTrackerPause}
-                  sx={{ width: "8em" }}
+                  sx={{ width: '8em' }}
                   variant="outlined"
                   onClick={startTimer}
                 >
-                  START
+                  {isTrackerPause || isTrackerRunning ? 'Resume' : 'START'}
                 </Button>
                 <Button
                   color="primary"
                   disabled={isTrackerPause || !isTrackerRunning}
-                  sx={{ width: "8em" }}
+                  sx={{ width: '8em' }}
                   variant="outlined"
                   onClick={pauseTimer}
                 >
@@ -87,9 +87,10 @@ function Tracker({ setRefresh }: TrackerProps) {
                   variant="outlined"
                   disabled={
                     (isTrackerRunning && !tag.length) ||
-                    (!isTrackerRunning && !tag.length)
+                    (!isTrackerRunning && !tag.length) ||
+                    !isTrackerRunning
                   }
-                  sx={{ width: "8em" }}
+                  sx={{ width: '8em' }}
                   onClick={stopTimer}
                 >
                   STOP
