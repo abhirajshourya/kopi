@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { createEntry } from "../routes/routes";
-import useTagInput from "../hooks/useTagInput";
-import { TimeEntryModel } from "../common/TimeEntryModel";
+import { useState, useEffect } from 'react';
+import { createEntry } from '../routes/routes';
+import useTagInput from '../hooks/useTagInput';
+import { TimeEntryModel } from '../common/TimeEntryModel';
 
 export function useTracker(
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>
@@ -11,7 +11,7 @@ export function useTracker(
   const [isTrackerRunning, setIsTrackerRunning] = useState(false);
   const [isTrackerPause, setIsTrackerPause] = useState(false);
   const [timerId, setTimerId] = useState(0);
-  const [tag, setTag] = useTagInput("");
+  const [tag, setTag] = useTagInput('');
 
   let TimeTracked: TimeEntryModel = {
     duration,
@@ -39,12 +39,13 @@ export function useTracker(
       tag: tag,
     };
     setTimerId(0);
-    setTag("");
+    setTag('');
     createEntry(TimeTracked);
     setRefresh((prev) => !prev);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let timer: any = null;
     if (isTrackerRunning && !isTrackerPause) {
       timer = setInterval(() => {
@@ -68,7 +69,7 @@ export function useTracker(
       setDuration(0);
       setTimerId(0);
       setIsTrackerRunning(false);
-      setTag("");
+      setTag('');
       clearInterval(timerId);
 
       createEntry(TimeTracked);
